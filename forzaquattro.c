@@ -5,23 +5,67 @@
 
     1 2 3 4 5 6 7
 
-a	L * K Y 0 0 0
-b	I L * K Y 0 0
-c	X I L * K Y 0
-d	0 X I L * K Y
-e	0 0 X I L * K
-f	0 0 0 X I L *
+a	0 0 0 0 0 0 0
+b	0 0 0 0 0 0 0
+c	0 0 0 0 0 0 0
+d	0 0 0 0 0 0 0
+e	0 0 0 0 0 0 0
+f	0 0 0 0 0 0 0
 
 */
 
+/*
+Svuota la matrice, ovvero la riempie con tutti 0
+*/
 void svuotaMatrice();
+
+/*
+Stampa a video la matrice
+*/
 void stampaMatrice();
+
+/*
+Verifica se la stringa che indica la posizione è nel formato corretto
+Esempio di stringhe corretta: c4, d1, e5
+Esempio di stringhe non corrette: c11, c0, 8d, a11
+Ritorna 1 in caso positivo, 0 altrimenti
+*/
 int stringaCorretta();
+
+/*
+Verifica se la posizione indicata è liberata.
+Ritorna 1 in caso positivo, 0 altrimenti
+*/
 int posizioneLibera();
+
+/*
+Modifica la matrice inserendo nella posizione indicata il token relativo all'utente
+Si presuppone che la stringa sia ben formattata e che la posizione non sia occupata
+*/
 void scriviInPosizione();
+
+/*
+Verifica se c'è stata la vittoria di uno dei due giocatori dopo ogni mossa
+Ritorna un valore maggiore a 1 in caso positivo, 0 altrimenti
+*/
 int verificaVittoria();
+
+/*
+Verifica se ci sono 4 token uguali orizzontalmente
+Ritorna 1 in caso positivo, 0 altrimenti
+*/
 int allineamentoOrizzontale();
+
+/*
+Verifica se ci sono 4 token uguali verticalmente
+Ritorna 1 in caso positivo, 0 altrimenti
+*/
 int allineamentoVerticale();
+
+/*
+Verifica se ci sono 4 token uguali diagonalmente
+Ritorna 1 in caso positivo, 0 altrimenti
+*/
 int allineamentoDiagonale();
 
 int main(){
@@ -48,6 +92,8 @@ int main(){
 	stampaMatrice(matrice);
 
 	while(!eTerminata){
+
+		/*Turno Player*/
 		char stringa[2];
 
 		printf("Player: ");
@@ -66,6 +112,7 @@ int main(){
 		if(verificaVittoria(matrice, 80)>0)
 			return 1;
 
+		/*Turno Computer*/
 		printf("Computer: ");
 		scanf("%s",stringa);
 
@@ -151,7 +198,6 @@ int verificaVittoria(int** matrice, int player){
 }
 
 int allineamentoOrizzontale(int** matrice, int player){
-
 	int i=0;
 	int j=0;
 	for(i=0;i<6;i++){
@@ -160,7 +206,6 @@ int allineamentoOrizzontale(int** matrice, int player){
 				return 1;
 		}
 	}
-
 	return 0;
 }
 
