@@ -1,0 +1,263 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+/*
+
+    1 2 3 4 5 6 7
+
+a	L * K Y 0 0 0
+b	I L * K Y 0 0
+c	X I L * K Y 0
+d	0 X I L * K Y
+e	0 0 X I L * K
+f	0 0 0 X I L *
+
+*/
+
+void svuotaMatrice();
+void stampaMatrice();
+int stringaCorretta();
+int posizioneLibera();
+void scriviInPosizione();
+int verificaVittoria();
+int allineamentoOrizzontale();
+int allineamentoVerticale();
+int allineamentoDiagonale();
+
+int main(){
+	
+	int **matrice;
+	int i=0;
+
+	matrice = malloc(6 * sizeof(int));
+  	for (i=0; i<6; i++){
+    	matrice[i] = malloc(7 * sizeof(int));
+  	}
+	int eTerminata=0;
+
+	svuotaMatrice(matrice);
+	
+	printf("Benvenuto nella versione digitale del gioco Forza 4!\n");
+	printf("Le caselle con 0 rappresentano posizioni libere.\n");
+	printf("Le caselle con P rappresentano posizioni da te occuppate.\n");
+	printf("Le caselle con C rappresentano posizione occupate dal pc.\n");
+	printf("Per indicare la casella dovrai utilizzare la seguente sintassi: rigaColonna\n");
+	printf("Se vuoi inserire un token nella riga 'c' e colonna '4' dovrai scrivere 'c4'\n");
+	printf("Che dire, buona fortuna!\n");
+	printf("Ecco la scacchiera di partenza.\n");
+	stampaMatrice(matrice);
+
+	while(!eTerminata){
+		char stringa[2];
+
+		printf("Player: ");
+		scanf("%s",stringa);
+
+		while(!stringaCorretta(stringa) || !posizioneLibera(stringa, matrice)){
+			printf("Posizione non corretta o occupata\n");
+			printf("Ricorda: Se vuoi inserire un token nella riga 'c' e colonna '4' dovrai scrivere 'c4\n");
+			printf("Player: ");
+			scanf("%s",stringa);
+		}
+
+		scriviInPosizione(stringa, matrice,80);
+		printf("Ecco la scacchiera\n");
+		stampaMatrice(matrice);
+		if(verificaVittoria(matrice, 80)>0)
+			return 1;
+
+		printf("Computer: ");
+		scanf("%s",stringa);
+
+		while(!stringaCorretta(stringa) || !posizioneLibera(stringa, matrice)){
+			printf("Posizione non corretta o occupata\n");
+			printf("Ricorda: Se vuoi inserire un token nella riga 'c' e colonna '4' dovrai scrivere 'c4\n");
+			printf("Computer: ");
+			scanf("%s",stringa);
+		}
+
+		scriviInPosizione(stringa, matrice,67);
+		printf("Ecco la scacchiera\n");
+		stampaMatrice(matrice);
+		if(verificaVittoria(matrice, 67)>0)
+			return 1;
+	}
+	return 0;
+}
+
+
+void scriviInPosizione(char* stringa, int** matrice,int valore){
+	int lettera = stringa[0];
+	int numero = stringa[1];
+
+	int posizione_riga=lettera-'a';
+	int posizione_colonna = numero - '0'-1;
+
+	matrice[posizione_riga][posizione_colonna]=valore;
+}
+
+int posizioneLibera(char* stringa, int** matrice){
+	int lettera = stringa[0];
+	int numero = stringa[1];
+
+	int posizione_riga=lettera-'a';
+	int posizione_colonna = numero - '0'-1;
+	return matrice[posizione_riga][posizione_colonna]==0;
+}
+
+int stringaCorretta(char* stringa){
+	if(strlen(stringa)!=2)
+		return 0;
+	int lettera = stringa[0];
+	int numero = stringa[1];
+	return (numero>48 && numero <56) && (lettera>96 && lettera<102);
+}
+
+void svuotaMatrice(int** matrice){
+	int i=0;
+	int j=0;
+	for(i=0;i<6;i++)
+		for(j=0;j<7;j++)
+			matrice[i][j]=0;
+}
+
+void stampaMatrice(int** matrice){
+	int i=0;
+	int j=0;
+	printf("%d\n",matrice[0][0] );
+	printf("  1 2 3 4 5 6 7\n");
+	char x = 'a';
+	for(i=0;i<6;i++){
+		printf("%c ", x);
+		for(j=0;j<7;j++)
+			switch (matrice[i][j]){
+				case 0: 
+				printf("0 ");
+				break;
+				case 67: 
+				printf("C ");
+				break;
+				case 80: 
+				printf("P ");
+				break;
+			}
+		printf("\n");
+		x++;
+	}
+}
+
+int verificaVittoria(int** matrice, int player){
+	return allineamentoOrizzontale(matrice,player) + allineamentoVerticale(matrice,player) + allineamentoDiagonale(matrice,player);
+}
+
+int allineamentoOrizzontale(int** matrice, int player){
+
+	int i=0;
+	int j=0;
+	for(i=0;i<6;i++){
+		for(j=0;j<4;j++){
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i][j+1] && matrice[i][j]==matrice[i][j+2] && matrice[i][j]==matrice[i][j+3])
+				return 1;
+		}
+	}
+
+	return 0;
+}
+
+int allineamentoVerticale(int** matrice, int player){
+	int i=0;
+	int j=0;
+	for(j=0;j<7;j++){
+		for(i=0;i<3;i++){
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i+1][j] && matrice[i][j]==matrice[i+2][j] && matrice[i][j]==matrice[i+3][j])
+				return 1;
+		}
+	}
+	return 0;
+}
+
+int allineamentoDiagonale(int** matrice, int player){
+	int i=0;
+	int j=0;
+	
+/*
+    1 2 3 4 5 6 7
+
+a	L * K Y 0 0 0
+b	I L * K Y 0 0
+c	X I L * K Y 0
+d	0 X I L * K Y
+e	0 0 X I L * K
+f	0 0 0 X I L *
+*/
+
+	//L
+	for(i=0,j=0;i<3;i++,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i+1][j+1] && matrice[i][j]==matrice[i+2][j+2] && matrice[i][j]==matrice[i+3][j+3])
+				return 1;
+	//*
+	for(i=0,j=1;i<3;i++,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i+1][j+1] && matrice[i][j]==matrice[i+2][j+2] && matrice[i][j]==matrice[i+3][j+3])
+				return 1;
+	//I
+	for(i=1,j=0;i<2;i++,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i+1][j+1] && matrice[i][j]==matrice[i+2][j+2] && matrice[i][j]==matrice[i+3][j+3])
+				return 1;
+	//K
+	for(i=0,j=2;i<2;i++,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i+1][j+1] && matrice[i][j]==matrice[i+2][j+2] && matrice[i][j]==matrice[i+3][j+3])
+				return 1;
+	//X
+	for(i=2,j=0;i<3;i++,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i+1][j+1] && matrice[i][j]==matrice[i+2][j+2] && matrice[i][j]==matrice[i+3][j+3])
+				return 1;
+
+	//Y
+	for(i=0,j=3;i<1;i++,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i+1][j+1] && matrice[i][j]==matrice[i+2][j+2] && matrice[i][j]==matrice[i+3][j+3])
+				return 1;
+
+
+/*
+    1 2 3 4 5 6 7
+
+a	0 0 0 X I L *
+b	0 0 X I L * K
+c	0 X I L * K Y
+d	X I L * K Y 0
+e	I L * K Y 0 0
+f	L * K Y 0 0 0
+*/
+
+	//L
+	for(i=5,j=1;i>2;i--,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i-1][j+1] && matrice[i][j]==matrice[i-2][j+2] && matrice[i][j]==matrice[i-3][j+3])
+				return 1;
+
+	//*
+	for(i=5,j=1;i>2;i--,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i-1][j+1] && matrice[i][j]==matrice[i-2][j+2] && matrice[i][j]==matrice[i-3][j+3])
+				return 1;
+
+	//I
+	for(i=4,j=0;i>2;i--,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i-1][j+1] && matrice[i][j]==matrice[i-2][j+2] && matrice[i][j]==matrice[i-3][j+3])
+				return 1;
+	
+	//K
+	for(i=5,j=2;i>3;i--,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i-1][j+1] && matrice[i][j]==matrice[i-2][j+2] && matrice[i][j]==matrice[i-3][j+3])
+				return 1;
+
+	//X
+	for(i=3,j=0;i>2;i--,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i-1][j+1] && matrice[i][j]==matrice[i-2][j+2] && matrice[i][j]==matrice[i-3][j+3])
+				return 1;
+
+	//Y
+	for(i=5,j=3;i>4;i--,j++)
+			if(matrice[i][j] == player && matrice[i][j]==matrice[i-1][j+1] && matrice[i][j]==matrice[i-2][j+2] && matrice[i][j]==matrice[i-3][j+3])
+				return 1;
+
+	return 0;
+}
