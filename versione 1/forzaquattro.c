@@ -83,8 +83,8 @@ int main(){
 	
 	printf("Benvenuto nella versione digitale del gioco Forza 4!\n");
 	printf("Le caselle con 0 rappresentano posizioni libere.\n");
-	printf("Le caselle con P rappresentano posizioni da te occuppate.\n");
-	printf("Le caselle con C rappresentano posizione occupate dal pc.\n");
+	printf("Le caselle con P rappresentano posizioni occupate da Player1\n");
+	printf("Le caselle con C rappresentano posizioni occupate da Player2\n");
 	printf("Per indicare la casella dovrai utilizzare la seguente sintassi: rigaColonna\n");
 	printf("Se vuoi inserire un token nella riga 'c' e colonna '4' dovrai scrivere 'c4'\n");
 	printf("Che dire, buona fortuna!\n");
@@ -93,16 +93,16 @@ int main(){
 
 	while(!eTerminata){
 
-		/*Turno Player*/
+		/*Turno Player1*/
 		char stringa[2];
 
-		printf("Player: ");
+		printf("Player1: ");
 		scanf("%s",stringa);
 
 		while(!stringaCorretta(stringa) || !posizioneLibera(stringa, matrice)){
 			printf("Posizione non corretta o occupata\n");
 			printf("Ricorda: Se vuoi inserire un token nella riga 'c' e colonna '4' dovrai scrivere 'c4\n");
-			printf("Player: ");
+			printf("Player1: ");
 			scanf("%s",stringa);
 		}
 
@@ -112,14 +112,14 @@ int main(){
 		if(verificaVittoria(matrice, 80)>0)
 			return 1;
 
-		/*Turno Computer*/
-		printf("Computer: ");
+		/*Turno Player2*/
+		printf("Player2: ");
 		scanf("%s",stringa);
 
 		while(!stringaCorretta(stringa) || !posizioneLibera(stringa, matrice)){
 			printf("Posizione non corretta o occupata\n");
 			printf("Ricorda: Se vuoi inserire un token nella riga 'c' e colonna '4' dovrai scrivere 'c4\n");
-			printf("Computer: ");
+			printf("Player2: ");
 			scanf("%s",stringa);
 		}
 
