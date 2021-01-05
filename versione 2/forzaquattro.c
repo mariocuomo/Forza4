@@ -78,7 +78,8 @@ int main(){
     	matrice[i] = malloc(7 * sizeof(int));
   	}
 	int eTerminata=0;
-
+	char player1[30];
+	char player2[30];
 	svuotaMatrice(matrice);
 	
 	printf("Benvenuto nella versione digitale del gioco Forza 4!\n");
@@ -87,22 +88,27 @@ int main(){
 	printf("Le caselle con C rappresentano posizioni occupate dal Player2\n");
 	printf("Per indicare la casella dovrai utilizzare la seguente sintassi: rigaColonna\n");
 	printf("Se vuoi inserire un token nella colonna '4' dovrai scrivere semplicemente '4'\n");
-	printf("Che dire, buona fortuna!\n");
+	printf("Inserisci il nome del primo giocatore: ");
+	scanf("%s",player1);
+	printf("Inserisci il nome del secondo giocatore: ");
+	scanf("%s",player2);
+	printf("Che dire %s e %s, buona fortuna!\n",player1, player2);
 	printf("Ecco la scacchiera di partenza.\n");
 	stampaMatrice(matrice);
+
 
 	while(!eTerminata){
 
 		/*Turno Player1*/
 		char stringa[1];
 
-		printf("Player1: ");
+		printf("%s: ",player1);
 		scanf("%s",stringa);
 
 		while(!stringaCorretta(stringa) || !posizioneLibera(stringa, matrice)){
 			printf("Posizione non corretta o occupata\n");
 			printf("Ricorda: Se vuoi inserire un token nella colonna 4 dovrai scrivere semplicemente '4'\n");
-			printf("Player: ");
+			printf("%s: ",player1);
 			scanf("%s",stringa);
 		}
 
@@ -110,18 +116,18 @@ int main(){
 		printf("Ecco la scacchiera\n");
 		stampaMatrice(matrice);
 		if(verificaVittoria(matrice, 80)>0){
-			printf("Vittoria di Player1\n");
+			printf("Vittoria di %s\n", player1);
 			return 1;
 		}
 
 		/*Turno Player2*/
-		printf("Player2: ");
+		printf("%s: ",player2);
 		scanf("%s",stringa);
 
 		while(!stringaCorretta(stringa) || !posizioneLibera(stringa, matrice)){
 			printf("Posizione non corretta o occupata\n");
 			printf("Ricorda: Se vuoi inserire un token nella colonna 4 dovrai scrivere semplicemente '4'\n");
-			printf("Computer: ");
+			printf("%s: ",player2);
 			scanf("%s",stringa);
 		}
 
@@ -129,7 +135,7 @@ int main(){
 		printf("Ecco la scacchiera\n");
 		stampaMatrice(matrice);
 		if(verificaVittoria(matrice, 67)>0){
-			printf("Vittoria di Player2\n");
+			printf("Vittoria di %s\n", player2);
 		}
 	}
 	return 0;
