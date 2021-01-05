@@ -109,8 +109,10 @@ int main(){
 		scriviInPosizione(stringa, matrice,80);
 		printf("Ecco la scacchiera\n");
 		stampaMatrice(matrice);
-		if(verificaVittoria(matrice, 80)>0)
+		if(verificaVittoria(matrice, 80)>0){
+			printf("Vittoria di Player1\n");
 			return 1;
+		}
 
 		/*Turno Player2*/
 		printf("Player2: ");
@@ -126,8 +128,9 @@ int main(){
 		scriviInPosizione(stringa, matrice,67);
 		printf("Ecco la scacchiera\n");
 		stampaMatrice(matrice);
-		if(verificaVittoria(matrice, 67)>0)
-			return 1;
+		if(verificaVittoria(matrice, 67)>0){
+			printf("Vittoria di Player2\n");
+		}
 	}
 	return 0;
 }
