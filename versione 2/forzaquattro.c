@@ -83,15 +83,15 @@ int main(){
 	svuotaMatrice(matrice);
 	
 	printf("Benvenuto nella versione digitale del gioco Forza 4!\n");
-	printf("Le caselle con 0 rappresentano posizioni libere.\n");
-	printf("Le caselle con P rappresentano posizioni occupate dal Player1\n");
-	printf("Le caselle con C rappresentano posizioni occupate dal Player2\n");
-	printf("Per indicare la casella dovrai utilizzare la seguente sintassi: rigaColonna\n");
-	printf("Se vuoi inserire un token nella colonna '4' dovrai scrivere semplicemente '4'\n");
 	printf("Inserisci il nome del primo giocatore: ");
 	scanf("%s",player1);
 	printf("Inserisci il nome del secondo giocatore: ");
 	scanf("%s",player2);
+	printf("Le caselle con 0 rappresentano posizioni libere.\n");
+	printf("Le caselle con P rappresentano posizioni occupate da %s\n",player1);
+	printf("Le caselle con C rappresentano posizioni occupate da %s\n",player2);
+	printf("Per indicare la casella dovrai utilizzare la seguente sintassi: colonna\n");
+	printf("Se vuoi inserire un token nella colonna '4' dovrai scrivere semplicemente '4'\n");
 	printf("Che dire %s e %s, buona fortuna!\n",player1, player2);
 	printf("Ecco la scacchiera di partenza.\n");
 	stampaMatrice(matrice);
