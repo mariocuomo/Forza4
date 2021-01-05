@@ -171,7 +171,6 @@ void svuotaMatrice(int** matrice){
 void stampaMatrice(int** matrice){
 	int i=0;
 	int j=0;
-	printf("%d\n",matrice[0][0] );
 	printf("  1 2 3 4 5 6 7\n");
 	char x = 'a';
 	for(i=0;i<6;i++){
