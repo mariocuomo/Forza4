@@ -84,12 +84,19 @@ int main(){
     	matrice[i] = malloc(7 * sizeof(int));
   	}
 	int eTerminata=0;
-	char player[30];
+	char tmp_player[30];
+
+	char *player;
+
 	svuotaMatrice(matrice);
 	
 	printf("Benvenuto nella versione digitale del gioco Forza 4!\n");
 	printf("Inserisci il tuo nome giocatore: ");
-	scanf("%s",player);
+	scanf("%s",tmp_player);
+	player=malloc(strlen(tmp_player) * sizeof(char));
+	strcpy(player,tmp_player);
+	free(tmp_player);
+
 	printf("Le caselle con 0 rappresentano posizioni libere.\n");
 	printf("Le caselle con P rappresentano posizioni occupate da %s\n",player);
 	printf("Le caselle con C rappresentano posizioni occupate dal computer\n");
@@ -125,7 +132,9 @@ int main(){
 
 		/*Turno Computer*/
 		generaMossaComputer(stringa);
-		printf("Computer: %s\n",stringa);
+
+		printf("Computer: ");
+		printf("%s\n",stringa);
 		scriviInPosizione(stringa, matrice,67);
 		printf("Ecco la scacchiera\n");
 		stampaMatrice(matrice);
@@ -194,6 +203,8 @@ void stampaMatrice(int** matrice){
 		printf("\n");
 		x++;
 	}
+	printf("\n");
+
 }
 
 int verificaVittoria(int** matrice, int player){
@@ -338,4 +349,5 @@ void generaMossaComputer(char* stringa){
 					break;
 			}	
   	strcpy(stringa,tmp);
+  	free(tmp);
 }

@@ -78,15 +78,23 @@ int main(){
     	matrice[i] = malloc(7 * sizeof(int));
   	}
 	int eTerminata=0;
-	char player1[30];
-	char player2[30];
+	char tmp_player1[30];
+	char *player1;
+	char tmp_player2[30];
+	char *player2;
 	svuotaMatrice(matrice);
 	
 	printf("Benvenuto nella versione digitale del gioco Forza 4!\n");
 	printf("Inserisci il nome del primo giocatore: ");
-	scanf("%s",player1);
+	scanf("%s",tmp_player1);
 	printf("Inserisci il nome del secondo giocatore: ");
-	scanf("%s",player2);
+	scanf("%s",tmp_player2);
+	player1=malloc(strlen(tmp_player1) * sizeof(char));
+	player2=malloc(strlen(tmp_player2) * sizeof(char));
+	strcpy(player1,tmp_player1);
+	strcpy(player2,tmp_player2);
+	free(tmp_player1);
+	free(tmp_player2);
 	printf("Le caselle con 0 rappresentano posizioni libere.\n");
 	printf("Le caselle con P rappresentano posizioni occupate da %s\n",player1);
 	printf("Le caselle con C rappresentano posizioni occupate da %s\n",player2);
@@ -136,6 +144,7 @@ int main(){
 		stampaMatrice(matrice);
 		if(verificaVittoria(matrice, 67)>0){
 			printf("Vittoria di %s\n", player2);
+			return 1;
 		}
 	}
 	return 0;
