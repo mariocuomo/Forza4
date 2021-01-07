@@ -86,6 +86,7 @@ int main(){
 	int **matrice;
 	int i=0;
 	int count=0;
+	srand(time(0));
 
 	matrice = malloc(6 * sizeof(int));
   	for (i=0; i<6; i++){
@@ -140,6 +141,8 @@ int main(){
 
 		/*Turno Computer*/
 		generaMossaComputer(stringa);
+		while(!posizioneLibera(stringa, matrice))
+			generaMossaComputer(stringa);
 
 		printf("Computer: ");
 		printf("%s\n",stringa);
@@ -148,6 +151,7 @@ int main(){
 		stampaMatrice(matrice);
 		if(verificaVittoria(matrice, 67)>0){
 			printf("Vittoria del computer!\n");
+			return 1;
 		}
 		
 		count++;
