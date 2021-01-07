@@ -71,9 +71,16 @@ Ritorna 1 in caso positivo, 0 altrimenti
 int allineamentoDiagonale();
 
 /*
-Genera una mossa del computer modificando la stringa passata per parametro
+Genera una mossa del computer modificando la stringa passata per parametro.
+La generazione della mossa è random.
 */
 void generaMossaComputer();
+
+/*
+Genera una mossa del computer modificando la stringa passata per parametro.
+La generazione della mossa è intelligente.
+*/
+void generaMossaComputerIntelligente();
 
 int main(){
 	int **matrice;
@@ -97,9 +104,9 @@ int main(){
 	strcpy(player,tmp_player);
 	free(tmp_player);
 
-	printf("Le caselle con 0 rappresentano posizioni libere.\n");
-	printf("Le caselle con P rappresentano posizioni occupate da %s\n",player);
-	printf("Le caselle con C rappresentano posizioni occupate dal computer\n");
+	printf("Le caselle con . rappresentano posizioni libere.\n");
+	printf("Le caselle con X rappresentano posizioni occupate da %s\n",player);
+	printf("Le caselle con 0 rappresentano posizioni occupate dal computer\n");
 	printf("Per indicare la casella dovrai utilizzare la seguente sintassi: colonna\n");
 	printf("Se vuoi inserire un token nella colonna '4' dovrai scrivere semplicemente '4'\n");
 	printf("Che dire %s, buona fortuna!\n",player);
@@ -191,13 +198,13 @@ void stampaMatrice(int** matrice){
 		for(j=0;j<7;j++)
 			switch (matrice[i][j]){
 				case 0: 
-				printf("0 ");
+				printf(". ");
 				break;
 				case 67: 
-				printf("C ");
+				printf("0 ");
 				break;
 				case 80: 
-				printf("P ");
+				printf("X ");
 				break;
 			}
 		printf("\n");

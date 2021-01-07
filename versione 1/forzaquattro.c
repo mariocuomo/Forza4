@@ -193,13 +193,13 @@ void stampaMatrice(int** matrice){
 		for(j=0;j<7;j++)
 			switch (matrice[i][j]){
 				case 0: 
-				printf("0 ");
+				printf(". ");
 				break;
 				case 67: 
-				printf("C ");
+				printf("0 ");
 				break;
 				case 80: 
-				printf("P ");
+				printf("X ");
 				break;
 			}
 		printf("\n");
