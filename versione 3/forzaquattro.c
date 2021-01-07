@@ -85,6 +85,7 @@ void generaMossaComputerIntelligente();
 int main(){
 	int **matrice;
 	int i=0;
+	int count=0;
 
 	matrice = malloc(6 * sizeof(int));
   	for (i=0; i<6; i++){
@@ -148,6 +149,13 @@ int main(){
 		if(verificaVittoria(matrice, 67)>0){
 			printf("Vittoria del computer!\n");
 		}
+		
+		count++;
+		if(count==42){
+			printf("%s hai pareggiato con il computer\n", player);
+			return 1;
+		}
+
 	}
 	return 0;
 }
