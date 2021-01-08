@@ -448,7 +448,7 @@ void generaMossaComputerIntelligente(char* stringa, int** matrice){
 					  ???????  || ???????
 					*/
 					if(j==0 || j==4){
-						if(matrice[i+1][3]!=0)
+						if(matrice[i+1][3]!=0 && matrice[i][3]==0)
 							tmp=3;
 					}
 					else{
@@ -456,9 +456,9 @@ void generaMossaComputerIntelligente(char* stringa, int** matrice){
 						?000??? || ??000?? || ???000?
 						??????? || ??????? || ???????
 						*/
-						if(matrice[i+1][j-1]!=0)
+						if(matrice[i+1][j-1]!=0 && matrice[i][j-1]==0)
 								tmp=j-1;
-						if(matrice[i+1][j+3]!=80)
+						if(matrice[i+1][j+3]!=80 && matrice[i][j+3]==0)
 								tmp=j+3;
 					}
 				}
@@ -572,7 +572,6 @@ void generaMossaComputerIntelligente(char* stringa, int** matrice){
 
 				//tris sulla prima riga
 				if(i==5){
-					printf("Entrato1\n");
 					//000???? || ????000
 					if(j==0 || j==4){
 						if(matrice[5][3]==0)
@@ -583,11 +582,9 @@ void generaMossaComputerIntelligente(char* stringa, int** matrice){
 						//?000??? || ??000?? || ???000?
 						if(matrice[5][j-1]==0){
 								tmp=j-1;
-								printf("Entrato2\n");
 						}
 						if(matrice[5][j+3]==0){
 								tmp=j+3;
-								printf("Entrato3\n");
 						}
 					}
 				}
@@ -606,9 +603,9 @@ void generaMossaComputerIntelligente(char* stringa, int** matrice){
 						?000??? || ??000?? || ???000?
 						??????? || ??????? || ???????
 						*/
-						if(matrice[i+1][j-1]!=0)
+						if(matrice[i+1][j-1]!=0 && matrice[i][j-1]==0)
 								tmp=j-1;
-						if(matrice[i+1][j+3]!=80)
+						if(matrice[i+1][j+3]!=80 && matrice[i][j+3]==0)
 								tmp=j+3;
 					}
 				}
@@ -644,6 +641,90 @@ void generaMossaComputerIntelligente(char* stringa, int** matrice){
 	  	free(tmpstring);
 	  	return;
 	}
+
+
+	//verifica se c'è un tris orizzontale con un pezzo vuoto nel mezzo
+	//situazione del tipo
+	/*
+	 	00?0??? || 0?00??? || ??0?00? || ??00?0? || ???00?0 || ???0?00
+	*/
+	i=0;
+	j=0;
+	for(i=5;i>=0 && tmp==-1;i--){
+		for(j=0;j<4 && tmp==-1;j++){
+			if(matrice[i][j] == 80 && matrice[i][j]==matrice[i][j+1] && matrice[i][j+2]==0 && matrice[i][j]==matrice[i][j+3]){
+				/*
+				tris del tipo 00?0??? || ??00?0? || ???00?0
+				*/
+
+				//tris distanziato sulla prima riga
+				if(i==5){
+					tmp=j+2;
+				}
+
+				//tris distanziato su una riga superiore
+				else{
+					/*
+						tris del tipo 00?0??? || ??00?0? || ???00?0
+									  ???????    ??????? || ???????
+					*/
+					if(matrice[i+1][j+2]!=0 && matrice[i][j+2]==0)
+							tmp=j+2;
+				}
+			}
+
+			if(matrice[i][j] == 80 && matrice[i][j+1]==0 && matrice[i][j]==matrice[i][j+2] && matrice[i][j]==matrice[i][j+3]){
+				/*
+				tris del tipo 0?00??? || ??0?00? || ???0?00
+				*/
+
+				//tris distanziato sulla prima riga
+				if(i==5){
+					tmp=j+1;
+				}
+
+				//tris distanziato su una riga superiore
+				else{
+					/*
+						tris del tipo 0?00??? || ??0?00? || ???0?00
+									  ??????? || ??????? || ???????
+					*/
+					if(matrice[i+1][j+1]!=0 && matrice[i][j+1]==0)
+							tmp=j+1;
+				}
+			}
+		}
+	}
+	if(tmp!=-1){
+		char *tmpstring;	
+		switch (tmp){
+					case 0: 
+						tmpstring="1";
+						break;
+					case 1: 
+						tmpstring="2";
+						break;
+					case 2: 
+						tmpstring="3";
+						break;
+					case 3: 
+						tmpstring="4";
+						break;
+					case 4: 
+						tmpstring="5";
+						break;
+					case 5: 
+						tmpstring="6";
+						break;
+					case 6: 
+						tmpstring="7";
+						break;
+				}	
+	  	strcpy(stringa,tmpstring);
+	  	free(tmpstring);
+	  	return;
+	}
+
 
 	//verifica se c'è un tris verticale, in caso affermativo prova a bloccarlo
 	i=0;
@@ -694,8 +775,16 @@ void generaMossaComputerIntelligente(char* stringa, int** matrice){
 	  	return;
 	}
 
-
-	if(tmp==-1)
+	
+	/*Genera mossa random*/
+	if(tmp==-1){
+		/*
+		char *tmpstring;	
+		tmpstring="7";
+		strcpy(stringa,tmpstring);
+	  	free(tmpstring);
+	  	*/
 		generaMossaComputer(stringa);
+	}
 	
 }
