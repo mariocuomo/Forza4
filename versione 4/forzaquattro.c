@@ -170,28 +170,31 @@ int main(){
 				}
 			}
 		}
+
 		printf("\n%s: %d\n",player, punteggioPlayer);
 		printf("Computer: %d\n", punteggioComputer);
-		eTerminata=0;
 		printf("Nuova partita?\n");
-		printf("0: si\n");
-		printf("1: no\n");
+		printf("1: si\n");
+		printf("0: no\n");
 		printf("Risposta: ");
 		scanf("%d",&fineGame);
 		while(fineGame!=0 && fineGame!=1){
 			printf("Risposta errata\n");
 			printf("Nuova partita?\n");
-			printf("0: si\n");
-			printf("1: no\n");
+			printf("1: si\n");
+			printf("0: no\n");
 			printf("Risposta: ");
 			scanf("%d",&fineGame);
 		}
+
+		fineGame=1-fineGame;
 
 		if (fineGame==0)
 		{
 			svuotaMatrice(matrice);
 			printf("\nEcco la scacchiera di partenza.\n");
 			stampaMatrice(matrice);
+			eTerminata=0;
 		}
 
 	}
